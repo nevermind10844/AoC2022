@@ -12,7 +12,7 @@ public class Main {
 
 		for (String s : strings) {
 			CharSequence left = s.subSequence(0, s.length());
-			CharSequence right = s.subSequence(s.length() / 2, s.length());
+//			CharSequence right = s.subSequence(s.length() / 2, s.length());
 
 			List<Integer> leftCompartment = new ArrayList<>();
 			List<Integer> rightCompartment = new ArrayList<>();

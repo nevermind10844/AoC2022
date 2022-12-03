@@ -15,9 +15,9 @@ public class Main {
 //			CharSequence right = s.subSequence(s.length() / 2, s.length());
 
 			List<Integer> leftCompartment = new ArrayList<>();
-			List<Integer> rightCompartment = new ArrayList<>();
+//			List<Integer> rightCompartment = new ArrayList<>();
 
-			Entry<List<Integer>, List<Integer>> rucksack = new SimpleEntry<>(leftCompartment, rightCompartment);
+			Entry<List<Integer>, List<Integer>> rucksack = new SimpleEntry<>(leftCompartment, null);
 			rucksackList.add(rucksack);
 
 			left.chars().forEach(item -> leftCompartment.add(item > 96 ? item - 96 : item - 38));

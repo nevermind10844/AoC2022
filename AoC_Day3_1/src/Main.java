@@ -32,15 +32,11 @@ public class Main {
 //			}
 		}
 
-		List<Integer> sources = new ArrayList<>();
-		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".chars()
-				.forEach(item -> sources.add(item > 96 ? item - 96 : item - 38));
-
 		int groupCount = strings.size() / 3;
 		for (int i = 0; i < groupCount; i++) {
 			List<Entry<List<Integer>, List<Integer>>> currentGroup = rucksackList.subList(i * 3, i * 3 + 3);
-			for (int j = 0; j < sources.size(); j++) {
-				Integer cur = sources.get(j);
+			for (int j = 0; j < currentGroup.get(0).getKey().size(); j++) {
+				Integer cur = currentGroup.get(0).getKey().get(j);
 				if (currentGroup.get(0).getKey().contains(cur) && currentGroup.get(1).getKey().contains(cur)
 						&& currentGroup.get(2).getKey().contains(cur)) {
 					sum += cur;

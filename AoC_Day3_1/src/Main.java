@@ -37,8 +37,7 @@ public class Main {
 			List<Entry<List<Integer>, List<Integer>>> currentGroup = rucksackList.subList(i * 3, i * 3 + 3);
 			for (int j = 0; j < currentGroup.get(0).getKey().size(); j++) {
 				Integer cur = currentGroup.get(0).getKey().get(j);
-				if (currentGroup.get(0).getKey().contains(cur) && currentGroup.get(1).getKey().contains(cur)
-						&& currentGroup.get(2).getKey().contains(cur)) {
+				if (currentGroup.get(1).getKey().contains(cur) && currentGroup.get(2).getKey().contains(cur)) {
 					sum += cur;
 					break;
 				}

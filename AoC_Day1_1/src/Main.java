@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Main {
@@ -18,7 +19,9 @@ public class Main {
 		}
 		sums.add(sum);
 		
-		int result = sums.stream().mapToInt(val -> val).max().getAsInt();
+		Collections.sort(sums, Collections.reverseOrder());
+		int result = sums.get(0) + sums.get(1) + sums.get(2);
+		
 		System.out.println(result);
 	}
 

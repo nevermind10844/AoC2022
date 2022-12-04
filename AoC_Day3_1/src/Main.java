@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.IntPredicate;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Main {
@@ -16,9 +14,9 @@ public class Main {
 		int groupCount = strings.size() / 3;
 		for (int i = 0; i < groupCount; i++) {
 			List<IntStream> currentGroup = rucksackList.subList(i*3, i*3 + 3);
-			List<Integer> masterList = currentGroup.get(0).boxed().collect(Collectors.toList());
-			List<Integer> firstSample = currentGroup.get(1).boxed().collect(Collectors.toList());
-			List<Integer> secondSample = currentGroup.get(2).boxed().collect(Collectors.toList());
+			List<Integer> masterList = currentGroup.get(0).boxed().toList();
+			List<Integer> firstSample = currentGroup.get(1).boxed().toList();
+			List<Integer> secondSample = currentGroup.get(2).boxed().toList();
 			
 			for(int probe : masterList) {
 				if(firstSample.contains(probe) && secondSample.contains(probe)) {
@@ -30,5 +28,5 @@ public class Main {
 
 		System.out.println(sum);
 	}
-
+	
 }

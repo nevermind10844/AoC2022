@@ -24,11 +24,15 @@ public class Main {
 				rightRange.add(i);
 			}
 			
-			if(rightRange.containsAll(leftRange) || leftRange.containsAll(rightRange))
-				sum++;
+			for(int part : leftRange) {
+				if(rightRange.contains(part)) {
+					sum++;
+					break;
+				}
+			}
 			
-			System.out.println(sum); //571
 		}
+		System.out.println(sum); //917
 	}
 
 }

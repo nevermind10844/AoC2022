@@ -20,7 +20,7 @@ public class Main {
 		sums.add(sum);
 		
 		Collections.sort(sums, Collections.reverseOrder());
-		int result = sums.get(0) + sums.get(1) + sums.get(2);
+		int result = sums.stream().limit(3).mapToInt(val -> val).sum();
 		
 		System.out.println(result);
 	}

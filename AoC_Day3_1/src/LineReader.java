@@ -3,24 +3,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LineReader {
 	public static List<String> read() {
-		List<String> strings = new ArrayList<>();
-		BufferedReader reader;
-
-		try {
-			reader = new BufferedReader(new FileReader("ext/input.txt"));
-			String line;
-
-			while ((line = reader.readLine()) != null)
-				strings.add(line);
-
-			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return strings;
+        try (BufferedReader in = new BufferedReader(new FileReader("ext/input.txt"))) {
+        	return in.lines().collect(Collectors.toList());
+        } catch (IOException e) {
+            System.err.println("I/O error for " + "ext/input.txt");
+            return new ArrayList<String>();
+        }
 	}
 }

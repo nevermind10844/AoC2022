@@ -10,7 +10,7 @@ public class Main {
 			clt.cycle(commands.get(i));
 		}
 		
-		System.out.println(clt.getSum());
+//		System.out.println(clt.getSum());
 	}
 
 }

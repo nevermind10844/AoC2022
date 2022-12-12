@@ -32,6 +32,10 @@ public class Monkey {
 	public void setTest(Test test) {
 		this.test = test;
 	}
+	
+	public Test getTest() {
+		return this.test;
+	}
 
 	public void setAction(Action action) {
 		this.action = action;
@@ -47,7 +51,7 @@ public class Monkey {
 		return this.inspectionCount;
 	}
 
-	public void inspectItems(int round) {
+	public void inspectItems(int round, int modFactor) {
 //		System.out.println(String.format("monkey %d inspects its items", this.id));
   		while (this.itemList.size() > 0) {
 			Item item = this.itemList.get(0);
@@ -57,7 +61,7 @@ public class Monkey {
 //					item.getWorryLevel()));
  			this.op.apply(item);
 			this.itemList.remove(item);
-//			item.setWorryLevel(item.getWorryLevel().divide(new BigInteger("3")));
+			item.setWorryLevel(item.getWorryLevel().mod(new BigInteger(String.valueOf(modFactor))));
 //			System.out.println(String.format("monkey %d removes item with worrylevel %d from its list ...", this.id,
 //					item.getWorryLevel()));
  			boolean result = this.test.test(item.getWorryLevel());

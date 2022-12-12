@@ -83,10 +83,15 @@ public class Main {
 			}
 		}
 		
+		int modFactor = monkeyList.get(0).getTest().getTestValue();
+		for(int i=1; i<monkeyList.size(); i++) {
+			modFactor *= monkeyList.get(i).getTest().getTestValue();
+		}
+		
 		for(int i=0; i<10000; i++) {
 			System.out.println("round " + i + " in progress...");
 			for(int j=0; j<monkeyList.size(); j++) {
-				monkeyList.get(j).inspectItems(i);
+				monkeyList.get(j).inspectItems(i, modFactor);
 			}
 		}
 		

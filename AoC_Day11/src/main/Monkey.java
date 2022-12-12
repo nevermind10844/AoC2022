@@ -1,5 +1,6 @@
 package main;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,20 +47,20 @@ public class Monkey {
 		return this.inspectionCount;
 	}
 
-	public void inspectItems() {
+	public void inspectItems(int round) {
 //		System.out.println(String.format("monkey %d inspects its items", this.id));
-		while (this.itemList.size() > 0) {
+  		while (this.itemList.size() > 0) {
 			Item item = this.itemList.get(0);
 //			System.out.println(
 //					String.format("monkey %d inspects item with worrylevel %d", this.id, item.getWorryLevel()));
 //			System.out.println(String.format("monkey %d applies operation on item with worrylevel %d ...", this.id,
 //					item.getWorryLevel()));
-			this.op.apply(item);
+ 			this.op.apply(item);
 			this.itemList.remove(item);
-//			item.setWorryLevel((int)Math.floor(item.getWorryLevel() / 3));
+//			item.setWorryLevel(item.getWorryLevel().divide(new BigInteger("3")));
 //			System.out.println(String.format("monkey %d removes item with worrylevel %d from its list ...", this.id,
 //					item.getWorryLevel()));
-			boolean result = this.test.test(item.getWorryLevel());
+ 			boolean result = this.test.test(item.getWorryLevel());
 			this.action.throwItem(result, item);
 //			System.out.println(String.format("... and throws it away!"));
 			this.inspectionCount++;

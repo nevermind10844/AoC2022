@@ -11,7 +11,7 @@ import main.Operation.OperationType;
 public class Main {
 
 	public static void main(String[] args) {
-		List<String> strings = LineReader.read("ext/example.txt");
+		List<String> strings = LineReader.read("ext/input.txt");
 		
 		List<Monkey> monkeyList = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class Main {
 				state = ReadState.OPERATION;
 				break;
 			case OPERATION:
-				int testValue = Integer.valueOf(string.trim().split(" ")[3]);
+				BigInteger testValue = BigInteger.valueOf(Long.valueOf(string.trim().split(" ")[3]));
 				test = new Test(testValue);
 				monkey.setTest(test);
 				state = ReadState.TEST;
@@ -85,7 +85,9 @@ public class Main {
 		
 		for(int i=0; i<10000; i++) {
 			System.out.println("round " + i + " in progress...");
-			monkeyList.forEach(m -> m.inspectItems());
+			for(int j=0; j<monkeyList.size(); j++) {
+				monkeyList.get(j).inspectItems(i);
+			}
 		}
 		
 		System.out.println(monkeyList);

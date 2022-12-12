@@ -49,7 +49,7 @@ public class Operation {
  			break;
 		case POW:
 			BigInteger itemWorryLevel = item.getWorryLevel();
-			item.setWorryLevel(itemWorryLevel.multiply(itemWorryLevel));
+			item.setWorryLevel(itemWorryLevel.pow(2));
 //			System.out.println(String.format("worrylevel is sqaured by %d to %d", itemWorryLevel, item.getWorryLevel()));
 			break;
 		default:

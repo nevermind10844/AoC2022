@@ -8,9 +8,12 @@ public class Tile {
 	private boolean start;
 	private boolean end;
 	
+	private Node n;
+	
 	public Tile(int x, int y) {
 		this.x = x;
 		this.y = y;
+		n = null;
 	}
 
 	public int getX() {
@@ -51,6 +54,14 @@ public class Tile {
 
 	public void setEnd(boolean end) {
 		this.end = end;
+	}
+	
+	public void setNode(Node n) {
+		this.n = n;
+	}
+	
+	public Node getNode() {
+		return this.n;
 	}
 
 	@Override

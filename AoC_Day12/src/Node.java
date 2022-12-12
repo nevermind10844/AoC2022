@@ -3,13 +3,19 @@ import java.util.Objects;
 public class Node {
 	private Tile tile;
 	private double h;
-	private double f;
+	private double g;
 	private Node prevNode;
+	
+	private boolean currentNode;
+	
+	private boolean solution;
+	private int steps;
 	
 	public Node(Tile tile) {
 		this.tile = tile;
 		this.h = 0;
-		this.f = 0;
+		this.g = 0;
+		this.currentNode = false;
 	}
 
 	public double getH() {
@@ -21,11 +27,15 @@ public class Node {
 	}
 
 	public double getF() {
-		return f;
+		return g+h;
 	}
 
-	public void setF(double f) {
-		this.f = f;
+	public double getG() {
+		return g;
+	}
+
+	public void setG(double g) {
+		this.g = g;
 	}
 
 	public Tile getTile() {
@@ -38,6 +48,30 @@ public class Node {
 
 	public void setPrevNode(Node prevNode) {
 		this.prevNode = prevNode;
+	}
+
+	public boolean isCurrentNode() {
+		return currentNode;
+	}
+
+	public void setCurrentNode(boolean currentNode) {
+		this.currentNode = currentNode;
+	}
+
+	public boolean isSolution() {
+		return solution;
+	}
+
+	public void setSolution(boolean solution) {
+		this.solution = solution;
+	}
+
+	public int getSteps() {
+		return steps;
+	}
+
+	public void setSteps(int steps) {
+		this.steps = steps;
 	}
 
 	@Override
@@ -59,7 +93,8 @@ public class Node {
 
 	@Override
 	public String toString() {
-		return "Node [tile=" + tile + ", h=" + h + ", f=" + f + "]";
+		return "Node [tile=" + tile + ", h=" + h + ", g=" + g + ", prevNode=" + prevNode + ", currentNode="
+				+ currentNode + ", solution=" + solution + ", steps=" + steps + "]";
 	}
 	
 	

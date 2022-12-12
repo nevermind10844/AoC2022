@@ -11,7 +11,7 @@ import main.Operation.OperationType;
 public class Main {
 
 	public static void main(String[] args) {
-		List<String> strings = LineReader.read("ext/example.txt");
+		List<String> strings = LineReader.read("ext/input.txt");
 		
 		List<Monkey> monkeyList = new ArrayList<>();
 

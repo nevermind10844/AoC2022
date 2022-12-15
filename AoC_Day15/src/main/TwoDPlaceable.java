@@ -27,6 +27,10 @@ public class TwoDPlaceable {
 		this.y = y;
 	}
 
+	public int getManhattenDistance(TwoDPlaceable other) {
+		return Math.abs(other.x - this.x) + Math.abs(other.y - this.y);
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(x, y);

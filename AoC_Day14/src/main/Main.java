@@ -58,6 +58,16 @@ public class Main {
 
 		Tile spawn = new Tile(500, 0);
 		map.setSpawn(spawn);
+		
+		int maxY = map.getMaxY();
+		int minX = map.getMinX();
+		int maxX = map.getMaxX();
+		
+		for(int x=minX; x<=maxX; x++) {
+			Tile t = new Tile(x, maxY+2);
+			t.setTileType(TileType.ROCK);
+			map.addTile(t);
+		}
 
 		map.thinAir();
 		

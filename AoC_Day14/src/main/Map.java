@@ -14,16 +14,19 @@ public class Map {
 	private boolean stillMoving;
 	private int currentX;
 	private int currentY;
-	
+
 	private Tile spawn;
+	
+	private boolean print;
 
 	public Map() {
 		this.tileList = new ArrayList<>();
 		this.endOfGame = false;
 		this.stillMoving = false;
+		this.print = true;
 	}
-	
-	public void setSpawn (Tile spawn){
+
+	public void setSpawn(Tile spawn) {
 		this.spawn = spawn;
 		this.addTile(spawn);
 	}
@@ -32,9 +35,22 @@ public class Map {
 		return this.endOfGame;
 	}
 
+	public int getMaxY() {
+		return this.tileList.stream().mapToInt(Tile::getY).max().getAsInt();
+	}
+
+	public int getMinX() {
+		return this.tileList.stream().mapToInt(Tile::getX).min().getAsInt();
+	}
+
+	public int getMaxX() {
+		return this.tileList.stream().mapToInt(Tile::getX).max().getAsInt();
+	}
+
 	public void addTile(Tile tile) throws UnsupportedOperationException {
 		if (tileList.contains(tile))
-			throw new UnsupportedOperationException("you cannot add the same tile address twice!");
+			throw new UnsupportedOperationException(
+					String.format("you cannot add the same tile address twice! %d, %d", tile.getX(), tile.getY()));
 		this.tileList.add(tile);
 	}
 
@@ -43,6 +59,17 @@ public class Map {
 		if (!optTile.isPresent())
 			return null;
 		return optTile.get();
+	}
+
+	private void addColumn(int x) {
+		int maxY = this.tileList.stream().mapToInt(Tile::getY).max().getAsInt();
+		int minY = this.tileList.stream().mapToInt(Tile::getY).min().getAsInt();
+
+		for (int y = minY; y <= maxY; y++) {
+			Tile t = new Tile(x, y);
+			t.setTileType(y == maxY ? TileType.ROCK : TileType.AIR);
+			this.addTile(t);
+		}
 	}
 
 	public void invalidate() throws Exception {
@@ -56,23 +83,27 @@ public class Map {
 				this.stillMoving = false;
 				this.endOfGame = true;
 			} else {
-				if(bottomTile.getTileType() == TileType.ROCK || bottomTile.getTileType() == TileType.SAND) {
-					Tile leftTile = this.getTile(currentTile.getX()-1, currentTile.getY()+1);
-					if(leftTile == null) {
-						currentTile.setTileType(TileType.AIR);
-						this.stillMoving = false;
-						this.endOfGame = true;
+				if (bottomTile.getTileType() == TileType.ROCK || bottomTile.getTileType() == TileType.SAND) {
+					Tile leftTile = this.getTile(currentTile.getX() - 1, currentTile.getY() + 1);
+					if (leftTile == null) {
+						this.addColumn(currentTile.getX() - 1);
+						this.print = true;
+						this.invalidate();
 					} else {
-						if(leftTile.getTileType() == TileType.ROCK || leftTile.getTileType() == TileType.SAND) {
-							Tile rightTile = this.getTile(currentTile.getX()+1, currentTile.getY()+1);
-							if(rightTile == null) {
-								currentTile.setTileType(TileType.AIR);
-								this.stillMoving = false;
-								this.endOfGame = true;
+						if (leftTile.getTileType() == TileType.ROCK || leftTile.getTileType() == TileType.SAND) {
+							Tile rightTile = this.getTile(currentTile.getX() + 1, currentTile.getY() + 1);
+							if (rightTile == null) {
+								this.addColumn(currentTile.getX() + 1);
+								this.print = true;
+								this.invalidate();
 							} else {
-								if(rightTile.getTileType() == TileType.ROCK || rightTile.getTileType() == TileType.SAND) {
+								if (rightTile.getTileType() == TileType.ROCK
+										|| rightTile.getTileType() == TileType.SAND) {
 									this.stillMoving = false;
-									System.out.println(this);
+									if(this.print) {
+										//System.out.println(this);
+										this.print = false;
+									}
 								} else {
 									currentTile.setTileType(TileType.AIR);
 									rightTile.setTileType(TileType.SAND);
@@ -95,13 +126,17 @@ public class Map {
 				}
 			}
 		} else {
-			this.spawn.setTileType(TileType.SAND);
-			this.currentX = this.spawn.getX();
-			this.currentY = this.spawn.getY();
-			this.stillMoving = true;
+			if(this.spawn.getTileType() == TileType.SAND){
+				this.endOfGame = true;
+			} else {
+				this.spawn.setTileType(TileType.SAND);
+				this.currentX = this.spawn.getX();
+				this.currentY = this.spawn.getY();
+				this.stillMoving = true;
+			}
 		}
 	}
-	
+
 	public void thinAir() {
 		int maxX = this.tileList.stream().mapToInt(Tile::getX).max().getAsInt();
 		int minX = this.tileList.stream().mapToInt(Tile::getX).min().getAsInt();
@@ -111,7 +146,7 @@ public class Map {
 		for (int y = minY; y < maxY + 1; y++) {
 			for (int x = minX; x < maxX + 1; x++) {
 				Tile t = this.getTile(x, y);
-				if(t == null) {
+				if (t == null) {
 					t = new Tile(x, y);
 					t.setTileType(TileType.AIR);
 					this.addTile(t);
@@ -119,7 +154,7 @@ public class Map {
 			}
 		}
 	}
-	
+
 	public int getSandBlockCount() {
 		return this.tileList.stream().filter(tile -> tile.getTileType() == TileType.SAND).toList().size();
 	}

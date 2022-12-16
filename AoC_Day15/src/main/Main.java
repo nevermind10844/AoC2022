@@ -76,25 +76,40 @@ public class Main {
 		}
 
 		System.out.println(maxX - minX);
-		int y = 2000000;
-		int sum = 0;
-
-		for (int x = realMinX; x <= realMaxX; x++) {
-			Tile t = new Tile(x, y);
-			System.out.println(t);
-			boolean valid = false;
-			for (Sensor sensor : sensorList) {
-//				System.out.println("checking sensor " + sensor + " for tile " + t);
-				int manhattenDistance = sensor.getManhattenDistance(sensor.getBeacon());
-				if (sensor.getManhattenDistance(t) <= manhattenDistance
-						&& t.getManhattenDistance(sensor.getBeacon()) != 0)
-					valid = true;
+//		int y = 2000000;
+//		int sum = 0;
+		
+//		int resultX = -1;
+//		int resultY = -1;
+		
+		ThreadPool threadPool = new ThreadPool();
+		
+		Thread threadPoolThread = new Thread(threadPool);
+		threadPoolThread.start();
+		
+		int size = 4000000;
+		int divisions = 400;
+		int length = size / divisions;
+		
+		
+		for(int y=0; y<divisions; y++) {
+			for(int x=0; x<divisions; x++) {
+				System.out.println(x + ":" + y);
+				System.out.println(length*x + ":" + length*y);
+				QuickMath qm = new QuickMath(length*x, length*y, length, sensorList);
+				Thread t = new Thread(qm);
+				t.setName("thread " + y);
+				t.start();
+				while(threadPool.isFull()) {
+					try {
+						Thread.sleep(4000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				threadPool.addRunnableAndStartThread(qm);
 			}
-			if (valid)
-				sum++;
 		}
-
-		System.out.println(sum);
 
 //		map.thinAir();
 //

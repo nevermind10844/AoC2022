@@ -26,7 +26,7 @@ public class Main {
 			}
 		}
 
-		List<Tile> lowestTiles = map.getTileList().stream().filter(tile -> tile.getHeight() == 1).toList();
+		List<Tile> lowestTiles = map.getTileList().stream().filter(tile -> tile.getHeight() == 1).collect(Collectors.toList());
 		lowestTiles.stream().forEach(tile -> tile.setStart(false));
 		
 		List<Node> resultNodes = new ArrayList<>();
@@ -81,8 +81,11 @@ public class Main {
 			start.setSolution(solution);
 			start.setSteps(length);
 			
+//			System.out.println(start.getSteps());
+			
 			if(solution)
 				resultNodes.add(start);
+			System.out.println(start.getSteps());
 		}
 		
 

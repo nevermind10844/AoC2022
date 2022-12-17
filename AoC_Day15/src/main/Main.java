@@ -92,7 +92,7 @@ public class Main {
 		int length = size / divisions;
 		
 		
-		for(int y=0; y<divisions; y++) {
+		for(int y=24; y<divisions; y++) {
 			for(int x=0; x<divisions; x++) {
 				System.out.println(x + ":" + y);
 				System.out.println(length*x + ":" + length*y);
@@ -102,7 +102,7 @@ public class Main {
 				t.start();
 				while(threadPool.isFull()) {
 					try {
-						Thread.sleep(4000);
+						Thread.sleep(2000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

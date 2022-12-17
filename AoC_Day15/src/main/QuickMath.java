@@ -78,14 +78,13 @@ public class QuickMath implements Runnable{
 				boolean scanned = false;
 				for (Sensor sensor : sensorList) {
 //				System.out.println("checking sensor " + sensor + " for tile " + t);
-					int manhattenDistance = sensor.getManhattenDistance(sensor.getBeacon());
-					if (sensor.getManhattenDistance(t) <= manhattenDistance)
+					if (sensor.getManhattenDistance(t) <= sensor.getPreCalculatedManhattenDistance())
 						scanned = true;
 				}
 				if (!scanned) {
 					this.xResult = x;
 					this.yResult = y;
-					System.out.println("result: " + this.xResult + "::" + this.yResult);
+					System.err.println("result: " + this.xResult + "::" + this.yResult);
 					x = 4000000 + 1;
 					y = 4000000 + 1;
 					this.running = false;

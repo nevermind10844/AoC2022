@@ -2,6 +2,7 @@ package main;
 
 public class Sensor extends TwoDPlaceable {
 	private Beacon beacon;
+	private int manhattenDistance;
 
 	public Sensor(int x, int y) {
 		super(x, y);
@@ -10,9 +11,14 @@ public class Sensor extends TwoDPlaceable {
 
 	public void setBeacon(Beacon b) {
 		this.beacon = b;
+		this.manhattenDistance = this.getManhattenDistance(this.beacon);
 	}
 
 	public Beacon getBeacon() {
 		return this.beacon;
+	}
+	
+	public int getPreCalculatedManhattenDistance() {
+		return this.manhattenDistance;
 	}
 }

@@ -3,8 +3,8 @@ package main;
 import java.util.Objects;
 
 public class TwoDPlaceable {
-	private int x;
-	private int y;
+	protected int x;
+	protected int y;
 
 	public TwoDPlaceable(int x, int y) {
 		this.x = x;
@@ -29,6 +29,10 @@ public class TwoDPlaceable {
 
 	public int getManhattenDistance(TwoDPlaceable other) {
 		return Math.abs(other.x - this.x) + Math.abs(other.y - this.y);
+	}
+	
+	public int getManhattenDistance(int x, int y) {
+		return Math.abs(x - this.x) + Math.abs(y - this.y);
 	}
 
 	@Override

@@ -17,8 +17,16 @@ public class Sensor extends TwoDPlaceable {
 	public Beacon getBeacon() {
 		return this.beacon;
 	}
-	
+
 	public int getPreCalculatedManhattenDistance() {
 		return this.manhattenDistance;
+	}
+
+	public int getXDistance(int x) {
+		return x - this.x;
+	}
+
+	public int getYDistance(int y) {
+		return y - this.y;
 	}
 }

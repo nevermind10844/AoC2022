@@ -11,9 +11,6 @@ public class Main {
 
 		List<String> strings = LineReader.read("ext/input.txt");
 
-//		Map map = new Map();
-//		strings.forEach(string -> System.out.println(string));
-
 		List<Sensor> sensorList = new ArrayList<>();
 
 		for (String s : strings) {
@@ -24,13 +21,6 @@ public class Main {
 			int sensorY = Integer.valueOf(sensorCoordString[1].replace("y=", ""));
 
 			Sensor sensor = new Sensor(sensorX, sensorY);
-//			Tile sensorTile = new Tile(sensor);
-//			try {
-//				map.addTile(sensorTile);
-//			} catch (UnsupportedOperationException ex) {
-//				ex.printStackTrace();
-//			}
-//			sensorTile = map.getTile(sensorX, sensorY);
 
 			String[] beaconCoordString = splitString[1].replace("closest beacon is at ", "").split(", ");
 
@@ -38,13 +28,6 @@ public class Main {
 			int beaconY = Integer.valueOf(beaconCoordString[1].replace("y=", ""));
 
 			Beacon beacon = new Beacon(beaconX, beaconY);
-//			Tile beaconTile = new Tile(beacon);
-//			try {
-//				map.addTile(beaconTile);
-//			} catch (UnsupportedOperationException ex) {
-//				ex.printStackTrace();
-//			}
-//			beaconTile = map.getTile(beaconX, beaconY);
 
 			sensor.setBeacon(beacon);
 
@@ -76,48 +59,27 @@ public class Main {
 		}
 
 		System.out.println(maxX - minX);
-//		int y = 2000000;
-//		int sum = 0;
-		
-//		int resultX = -1;
-//		int resultY = -1;
-		
+
 		ThreadPool threadPool = new ThreadPool();
-		
+
 		Thread threadPoolThread = new Thread(threadPool);
 		threadPoolThread.start();
-		
-		int size = 4000000;
-		int divisions = 400;
-		int length = size / divisions;
-		
-		
-		for(int y=24; y<divisions; y++) {
-			for(int x=0; x<divisions; x++) {
-				System.out.println(x + ":" + y);
-				System.out.println(length*x + ":" + length*y);
-				QuickMath qm = new QuickMath(length*x, length*y, length, sensorList);
-				Thread t = new Thread(qm);
-				t.setName("thread " + y);
-				t.start();
-				while(threadPool.isFull()) {
-					try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-				threadPool.addRunnableAndStartThread(qm);
-			}
-		}
 
-//		map.thinAir();
-//
-//		map.spreadSensors();
-//		
-//		long scanned = map.getScannedCountInLine(10);
-//		
-//		System.out.println(map);
+		int size = 4000000;
+
+		for (int y = 0; y < size; y++) {
+			if ((y + 1) % 1000 == 0)
+				System.out.println(String.format("%.3f", (y + 1) / Double.valueOf(size)));
+			QuickMath qm = new QuickMath(y, size, sensorList);
+			while (threadPool.isFull()) {
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			threadPool.addRunnableAndStartThread(qm);
+		}
 
 	}
 

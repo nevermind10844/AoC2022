@@ -13,7 +13,6 @@ public class ThreadPool implements Runnable{
 	}
 	
 	public boolean isFull() {
-//		System.out.println("thread pool size ("+this.threadList.size()+")");
 		return this.full;
 	}
 	
@@ -25,7 +24,6 @@ public class ThreadPool implements Runnable{
 		Thread t = new Thread(r);
 		t.start();
 		threadList.add(t);
-//		System.out.println("thread added ("+this.threadList.size()+")");
 		if(this.threadList.size()>=4)
 			this.full = true;
 	}
@@ -34,16 +32,14 @@ public class ThreadPool implements Runnable{
 	public void run() {
 		while(!stop) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(1);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-			for (Thread thread : this.threadList) {
-				if(!thread.isAlive()) {
-					this.threadList.remove(thread);
-//					System.out.println("thread removed ("+this.threadList.size()+")");
+			for (int i=threadList.size()-1; i>=0; i--) {
+				Thread t = threadList.get(i);
+				if(!t.isAlive()) {
+					this.threadList.remove(i);
 					this.full = false;
 					break;
 				}
